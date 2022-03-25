@@ -1,9 +1,6 @@
-import {ApiProperty} from "@nestjs/swagger";
+import { ApiProperty } from "@nestjs/swagger";
 
-export class UserDto {
-
-    @ApiProperty()
-    _id?: string;
+export class CreateUserDto {
 
     /**
      * A username
@@ -33,8 +30,8 @@ export class UserDto {
     avatar: string = 'me.png';
 
     /**
-     * A number between 0 (pro) and 1 (parent)
+     * A role of user: PARENT or PRO
      */
     @ApiProperty()
-    role: number = 1;
+    role: string = 'PARENT';
 }

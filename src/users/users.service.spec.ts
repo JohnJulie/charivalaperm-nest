@@ -10,7 +10,8 @@ const mockUser = (
     password = '1234abcd',
     children = ['Raphaël'],
     avatar = 'me.png',
-    role = 1,
+    role = 'PARENT',
+    contracts = [],
     id = 'a uuid'
 ): User => ({
   username,
@@ -18,6 +19,7 @@ const mockUser = (
   children,
   avatar,
   role,
+  contracts,
   id
 });
 
@@ -27,7 +29,8 @@ const mockUserDoc = (mock?: Partial<User>): Partial<UserDoc> => ({
   password: mock?.password || '1234abcd',
   children: mock?.children || ['Raphaël'],
   avatar: mock?.avatar || 'me.png',
-  role: mock?.role || 1,
+  role: mock?.role || 'PARENT',
+  contracts: mock?.contracts || [],
   _id: mock?.id || 'a uuid',
 });
 
@@ -47,6 +50,7 @@ describe('UsersService', () => {
             constructor: jest.fn().mockResolvedValue(mockUser()),
             findOne: jest.fn(),
             create: jest.fn(),
+            findByIdAndUpdate: jest.fn()
           },
         },],
     }).compile();
@@ -70,7 +74,8 @@ describe('UsersService', () => {
           password: 'azerty',
           children: ['Olympe'],
           avatar: 'oiseau.png',
-          role: 1,
+          role: 'PARENT',
+          contracts: [],
           id: 'some id',
         }),
     );
@@ -79,8 +84,22 @@ describe('UsersService', () => {
       password: 'azerty',
       children: ['Olympe'],
       avatar: 'oiseau.png',
-      role: 1,
+      role: 'PARENT',
     });
-    expect(newUser).toEqual(mockUser('lepotrelea', 'azerty', ['Olympe'], 'oiseau.png', 1, 'some id'));
+    expect(newUser).toEqual(mockUser('lepotrelea', 'azerty', ['Olympe'], 'oiseau.png', 'PARENT',  [],'some id'));
   });
+
+  /*it('should update user', async () => {
+    jest.spyOn(model, 'findByIdAndUpdate').mockImplementationOnce(() =>
+      Promise.resolve({
+        username: 'lepotrelea',
+        password: 'azerty',
+        children: ['Olympe'],
+        avatar: 'soleil.png',
+        role: 'PARENT',
+        contracts: [],
+        id: 'some id',
+      }),
+    );
+  });*/
 });
